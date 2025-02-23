@@ -49,8 +49,6 @@
   }
 }
 
-
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -58,4 +56,14 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
