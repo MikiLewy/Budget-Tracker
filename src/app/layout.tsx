@@ -1,6 +1,8 @@
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+
+import { ThemeProvider } from '@/providers/theme-provider';
 import './globals.css';
 
 const geistSans = Geist({
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
     template: '%s | Budget tracker',
   },
   description:
-    'Śledź swoje wydatki, planuj budżet i oszczędzaj mądrze – wszystko w jednym miejscu. Idealne do osób, które chcą zarządzać swoimi finansami jak ekspert!',
+    'Track your expenses, plan your budget and save smartly – all in one place. Ideal for people who want to manage their finances like a pro!',
 };
 
 export default function RootLayout({
@@ -29,8 +31,12 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="pl">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            {children}
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );

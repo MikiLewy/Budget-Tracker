@@ -23,7 +23,7 @@ const createUser = async () => {
     });
   }
 
-  redirect('/expenses');
+  redirect('/overview');
 };
 
 const NewUserPage = async () => {
