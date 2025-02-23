@@ -10,7 +10,7 @@ const Home = async () => {
 
   return (
     <main className="flex min-h-screen relative flex-col items-center justify-center gap-4 bg-[#0F172A] overflow-hidden">
-      <div className="absolute -top-[100px] left-0 w-full h-[115vh]">
+      <div className="absolute -top-[100px] left-0 w-full h-[120vh]">
         <Orb hoverIntensity={0} rotateOnHover={false} hue={0} forceHoverState={false} />
       </div>
       <div className="flex flex-col gap-10 max-w-[900px] relative z-20">
