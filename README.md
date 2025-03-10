@@ -7,5 +7,17 @@
 * Utworzono logo&#x20;
 * Naprawa błędów
 
+### 1.0.1
+
+* Zaprogramowanie widoku listy transakcji
+* Dodanie typów i kategorii do listy transakcji
+* Utworzenie dodawania transakcji
+* Utworzenie szukania transakcji
+* Utworzenie tabelki
+
+
+
+
+
 
 
