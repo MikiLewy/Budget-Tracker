@@ -1,8 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { ReactNode } from 'react';
 
-import { Transaction, TransactionType } from '../api/types/transaction';
-
 import { FormatDate } from '@/components/atoms/format-date';
 import { TableColumnHeader } from '@/components/organisms/table/table-column-header';
 import { Badge } from '@/components/ui/badge';
@@ -10,9 +8,15 @@ import { dateFormats } from '@/constants/date-formats';
 import { transactionsCategoriesTypes } from '@/constants/transactions-categories';
 import { CategoryType } from '@/types/enum/category-type';
 
+import { Transaction, TransactionType } from '../api/types/transaction';
+
 export interface TransactionsActionSlotPayload {
   id: string;
   type: TransactionType;
+  name: string;
+  amount: number;
+  categoryId: string;
+  date: Date;
 }
 
 export const getTransactionsTableColumns = (actionsSlot: (payload: TransactionsActionSlotPayload) => ReactNode) => {
@@ -79,8 +83,8 @@ export const getTransactionsTableColumns = (actionsSlot: (payload: TransactionsA
       },
     },
     {
-      accessorKey: 'createdAt',
-      meta: 'Created at',
+      accessorKey: 'created_at',
+      meta: 'created_at',
       header: ({ column }) => {
         return <TableColumnHeader column={column} title="Date" />;
       },
@@ -102,6 +106,10 @@ export const getTransactionsTableColumns = (actionsSlot: (payload: TransactionsA
         return actionsSlot({
           id: transaction.id,
           type: transaction.type,
+          name: transaction.name,
+          amount: transaction.amount,
+          categoryId: transaction.categoryId || '',
+          date: transaction.created_at,
         });
       },
     },

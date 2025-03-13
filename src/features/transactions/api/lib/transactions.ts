@@ -1,4 +1,7 @@
+import { desc } from 'drizzle-orm';
+
 import { db } from '@/db';
+import { transactions } from '@/db/schema';
 
 export const getTransactions = async () => {
   const response = await db.query.transactions.findMany({
@@ -11,6 +14,7 @@ export const getTransactions = async () => {
         },
       },
     },
+    orderBy: [desc(transactions.created_at)],
   });
 
   return response;

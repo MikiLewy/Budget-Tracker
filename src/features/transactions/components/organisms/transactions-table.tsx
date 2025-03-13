@@ -19,6 +19,7 @@ import { useState } from 'react';
 import SearchBar from '@/components/molecules/search-bar';
 import { Table } from '@/components/organisms/table/table';
 import { TableFacetedFilter } from '@/components/organisms/table/table-faceted-filters';
+import { TablePagination } from '@/components/organisms/table/table-pagination';
 import { TableViewOptions } from '@/components/organisms/table/table-view-options';
 import { Button } from '@/components/ui/button';
 
@@ -84,6 +85,7 @@ export function TransactionsTable<TData, TValue>({ columns, data, categoriesFilt
         <TableViewOptions table={table} />
       </div>
       <Table columnsLength={columns.length} table={table} />
+      <TablePagination table={table} />
     </div>
   );
 }

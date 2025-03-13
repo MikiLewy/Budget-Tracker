@@ -2,6 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import { ThemeProvider } from '@/providers/theme-provider';
 
@@ -15,6 +16,7 @@ const Providers = ({ children }: Props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <Toaster position="top-center" />
         {children}
       </ThemeProvider>
     </QueryClientProvider>
