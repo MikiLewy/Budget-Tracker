@@ -15,6 +15,21 @@
 * Utworzenie szukania transakcji
 * Utworzenie tabelki
 
+### 1.0.2
+
+* Dodanie manipulacji transakcjami (Dodawanie, aktualizowanie i usuwanie transakcji)
+* Dodanie akcji CRUD do transakcji
+
+
+
+
+
+
+
+
+
+
+
 
 
 
