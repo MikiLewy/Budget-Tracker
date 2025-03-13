@@ -1,0 +1,1 @@
+ALTER TABLE "users" RENAME COLUMN "budget" TO "balance";

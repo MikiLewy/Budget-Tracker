@@ -1,9 +1,9 @@
 import { currentUser } from '@clerk/nextjs/server';
-import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 
 import { db } from '@/db';
 import { users } from '@/db/schema';
+import { getCurrentUserByClerkId } from '@/shared/api/lib/get-current-user-by-clerk-id';
 
 const createUser = async () => {
   const clerkUser = await currentUser();
@@ -12,9 +12,7 @@ const createUser = async () => {
     redirect('/sign-in');
   }
 
-  const existingUser = await db.query.users.findFirst({
-    where: eq(users.clerkId, clerkUser.id || ''),
-  });
+  const existingUser = await getCurrentUserByClerkId(clerkUser.id);
 
   if (!existingUser) {
     await db.insert(users).values({
