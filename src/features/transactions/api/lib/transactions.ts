@@ -19,7 +19,3 @@ export const getTransactions = async () => {
 
   return response;
 };
-
-export const createTransaction = async () => {
-  //  await db.insert(transactions).values();
-};

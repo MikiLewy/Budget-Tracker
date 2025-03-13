@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, text } from 'drizzle-orm/pg-core';
+import { pgTable, real, text } from 'drizzle-orm/pg-core';
 
 import { transactions } from '@/features/transactions/server/schema/transactions';
 
@@ -11,6 +11,7 @@ export const users = pgTable('users', {
     .$defaultFn(() => crypto.randomUUID()),
   email: text('email').unique(),
   clerkId: text('clerkId').unique(),
+  balance: real('balance').default(0).notNull(),
   ...timestamps,
 });
 

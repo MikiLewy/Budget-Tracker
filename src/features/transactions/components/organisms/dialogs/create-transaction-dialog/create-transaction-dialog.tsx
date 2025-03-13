@@ -13,6 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { transactionsCategoriesTypes } from '@/constants/transactions-categories';
 import { useCreateTransaction } from '@/features/transactions/hooks/mutation/use-create-transaction';
 import { useCategories } from '@/shared/hooks/query/use-categories';
+import { useCurrentUser } from '@/shared/hooks/query/use-current-user';
+import { calculateBalanceBasedOnTransactionType } from '@/shared/utils/calculate-balance-based-on-transaction-type';
 
 import { createTransactionSchema } from './schema/create-transaction-schema';
 
@@ -35,11 +37,23 @@ const CreateTransactionDialog = ({ open, onClose }: DialogActions) => {
 
   const { data: categoriesData } = useCategories();
 
+  const { data: currentUser } = useCurrentUser();
+
   const { mutateAsync, isPending } = useCreateTransaction();
 
   const onSubmit = async (values: FormValues) => {
     await mutateAsync(values, { onSuccess: onClose });
   };
+
+  const transactionType = form.watch('type');
+
+  const amount = form.watch('amount');
+
+  const balanceAfterTransaction = calculateBalanceBasedOnTransactionType({
+    transactionType,
+    amount: Number(amount),
+    balance: currentUser?.balance || 0,
+  });
 
   useEffect(() => {
     if (!open) {
@@ -137,6 +151,7 @@ const CreateTransactionDialog = ({ open, onClose }: DialogActions) => {
                   <Input type="number" min={1} autoFocus={false} {...field} />
                 </FormControl>
                 <FormMessage />
+                <FormDescription>Balance in your account after transaction: {balanceAfterTransaction}</FormDescription>
               </FormItem>
             )}
           />

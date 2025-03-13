@@ -20,7 +20,6 @@ import SearchBar from '@/components/molecules/search-bar';
 import { Table } from '@/components/organisms/table/table';
 import { TableFacetedFilter } from '@/components/organisms/table/table-faceted-filters';
 import { TablePagination } from '@/components/organisms/table/table-pagination';
-import { TableViewOptions } from '@/components/organisms/table/table-view-options';
 import { Button } from '@/components/ui/button';
 
 interface TableProps<TData, TValue> {
@@ -82,7 +81,6 @@ export function TransactionsTable<TData, TValue>({ columns, data, categoriesFilt
             </Button>
           ) : null}
         </div>
-        <TableViewOptions table={table} />
       </div>
       <Table columnsLength={columns.length} table={table} />
       <TablePagination table={table} />

@@ -16,6 +16,10 @@ import { transactionsCategoriesTypes } from '@/constants/transactions-categories
 import { TransactionType } from '@/features/transactions/api/types/transaction';
 import { useUpdateTransaction } from '@/features/transactions/hooks/mutation/use-update-transaction';
 import { useCategories } from '@/shared/hooks/query/use-categories';
+import { useCurrentUser } from '@/shared/hooks/query/use-current-user';
+import { calculateBalanceBasedOnTransactionType } from '@/shared/utils/calculate-balance-based-on-transaction-type';
+import { calculateDifferenceInAmount } from '@/shared/utils/calculate-difference-in-amount';
+import { calculateInitialBalanceBasedOnTransactionType } from '@/shared/utils/calculate-initial-balance-based-on-transaction-type';
 
 type FormValues = z.infer<typeof updateTransactionSchema>;
 
@@ -59,6 +63,25 @@ const UpdateTransactionDialog = ({
   const onSubmit = async (values: FormValues) => {
     await mutateAsync({ ...values, id: selectedTransactionId }, { onSuccess: onClose });
   };
+
+  const { data: currentUser } = useCurrentUser();
+
+  const transactionType = form.watch('type');
+
+  const amount = form.watch('amount');
+
+  const differenceInAmount = calculateDifferenceInAmount({ oldAmount: selectedTransactionAmount, newAmount: amount });
+
+  const balanceAfterTransaction = calculateBalanceBasedOnTransactionType({
+    transactionType,
+    amount: differenceInAmount,
+    balance: calculateInitialBalanceBasedOnTransactionType({
+      oldType: selectedTransactionType,
+      newType: transactionType,
+      balance: currentUser?.balance || 0,
+      amount: selectedTransactionAmount,
+    }),
+  });
 
   useEffect(() => {
     if (open) {
@@ -164,6 +187,7 @@ const UpdateTransactionDialog = ({
                   <Input type="number" min={1} autoFocus={false} {...field} />
                 </FormControl>
                 <FormMessage />
+                <FormDescription>Balance in your account after transaction: {balanceAfterTransaction}</FormDescription>
               </FormItem>
             )}
           />
