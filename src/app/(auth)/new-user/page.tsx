@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 
 import { db } from '@/db';
 import { users } from '@/db/schema';
-import { getCurrentUserByClerkId } from '@/shared/api/lib/get-current-user-by-clerk-id';
+import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
 
 const createUser = async () => {
   const clerkUser = await currentUser();

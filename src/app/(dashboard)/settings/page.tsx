@@ -1,5 +1,7 @@
+import Settings from '@/features/settings/components/templates/settings/settings';
+
 const SettingsPage = () => {
-  return <div>Settings</div>;
+  return <Settings />;
 };
 
 export default SettingsPage;
