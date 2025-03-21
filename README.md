@@ -1,11 +1,15 @@
 # Changelog
 
-### 1.0.0
+### 1.0.3
 
-* Zaprojektowanie i stworzenie strony startowej&#x20;
-* Utworzono tworzenie kont za pomocą e-mail i google&#x20;
-* Utworzono logo&#x20;
+* Dodanie widoku ustawień
+* Optymalizacja aplikacji
 * Naprawa błędów
+
+### 1.0.2
+
+* Dodanie manipulacji transakcjami (Dodawanie, aktualizowanie i usuwanie transakcji)
+* Dodanie akcji CRUD do transakcji
 
 ### 1.0.1
 
@@ -15,15 +19,11 @@
 * Utworzenie szukania transakcji
 * Utworzenie tabelki
 
-### 1.0.2
+### 1.0.0
 
-* Dodanie manipulacji transakcjami (Dodawanie, aktualizowanie i usuwanie transakcji)
-* Dodanie akcji CRUD do transakcji
-
-### 1.0.3
-
-* Dodanie widoku ustawień
-* Optymalizacja aplikacji
+* Zaprojektowanie i stworzenie strony startowej&#x20;
+* Utworzono tworzenie kont za pomocą e-mail i google&#x20;
+* Utworzono logo&#x20;
 * Naprawa błędów
 
 
