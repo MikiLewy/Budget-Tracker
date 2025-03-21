@@ -20,6 +20,16 @@
 * Dodanie manipulacji transakcjami (Dodawanie, aktualizowanie i usuwanie transakcji)
 * Dodanie akcji CRUD do transakcji
 
+### 1.0.3
+
+* Dodanie widoku ustawień
+* Optymalizacja aplikacji
+* Naprawa błędów
+
+
+
+
+
 
 
 
