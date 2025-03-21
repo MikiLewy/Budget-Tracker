@@ -5,15 +5,15 @@ import { Pool } from '@neondatabase/serverless';
 import { and, eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/neon-serverless';
 
-import { TransactionType } from '../../api/types/transaction';
-import { transactions } from '../schema/transactions';
-
 import { db } from '@/db';
 import { users } from '@/db/schema';
-import { getCurrentUserByClerkId } from '@/shared/api/lib/get-current-user-by-clerk-id';
+import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
 import { calculateBalanceBasedOnTransactionType } from '@/shared/utils/calculate-balance-based-on-transaction-type';
 import { calculateDifferenceInAmount } from '@/shared/utils/calculate-difference-in-amount';
 import { calculateInitialBalanceBasedOnTransactionType } from '@/shared/utils/calculate-initial-balance-based-on-transaction-type';
+
+import { TransactionType } from '../../api/types/transaction';
+import { transactions } from '../schema/transactions';
 
 export interface UpdateTransactionPayload {
   id: string;
