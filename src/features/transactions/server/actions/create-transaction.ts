@@ -1,15 +1,13 @@
 'use server';
 
-import { currentUser } from '@clerk/nextjs/server';
 import { Pool } from '@neondatabase/serverless';
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/neon-serverless';
 
 import { transactions, users } from '@/db/schema';
 import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
+import { TransactionType } from '@/shared/types/transaction-type';
 import { calculateBalanceBasedOnTransactionType } from '@/shared/utils/calculate-balance-based-on-transaction-type';
-
-import { TransactionType } from '../../api/types/transaction';
 
 export interface CreateTransactionPayload {
   name: string;
@@ -17,17 +15,12 @@ export interface CreateTransactionPayload {
   type: TransactionType;
   categoryId: string;
   date: Date;
+  userId: string;
 }
 
-export const createTransaction = async ({ name, amount, categoryId, date, type }: CreateTransactionPayload) => {
+export const createTransaction = async ({ name, amount, categoryId, date, type, userId }: CreateTransactionPayload) => {
   try {
-    const clerkUser = await currentUser();
-
-    if (!clerkUser?.id) {
-      throw new Error('User not found');
-    }
-
-    const user = await getCurrentUserByClerkId(clerkUser.id);
+    const user = await getCurrentUserByClerkId(userId);
 
     if (!user) {
       throw new Error('User not found');
@@ -53,6 +46,7 @@ export const createTransaction = async ({ name, amount, categoryId, date, type }
         categoryId,
         created_at: date,
         userId: user.id,
+        updated_at: new Date(),
       });
       await tx.update(users).set({ balance: newBalance }).where(eq(users.id, user.id));
     });

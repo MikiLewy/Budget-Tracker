@@ -1,6 +1,8 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { ReactNode } from 'react';
 
+import { RecurringTransaction } from '../api/types/recurring-transaction';
+
 import { FormatDate } from '@/components/atoms/format-date';
 import { TableColumnHeader } from '@/components/organisms/table/table-column-header';
 import { Badge } from '@/components/ui/badge';
@@ -9,19 +11,19 @@ import { transactionsCategoriesTypes } from '@/constants/transactions-categories
 import { TransactionType } from '@/shared/types/transaction-type';
 import { CategoryType } from '@/types/enum/category-type';
 
-import { Transaction } from '../api/types/transaction';
-
-export interface TransactionsActionSlotPayload {
+export interface RecurringTransactionsActionSlotPayload {
   id: string;
   type: TransactionType;
   name: string;
   amount: number;
   categoryId: string;
-  date: Date;
+  dayOfMonth: number;
 }
 
-export const getTransactionsTableColumns = (actionsSlot: (payload: TransactionsActionSlotPayload) => ReactNode) => {
-  const columns: ColumnDef<Transaction>[] = [
+export const getRecurringTransactionsTableColumns = (
+  actionsSlot: (payload: RecurringTransactionsActionSlotPayload) => ReactNode,
+) => {
+  const columns: ColumnDef<RecurringTransaction>[] = [
     {
       accessorKey: 'name',
       meta: 'name',
@@ -84,17 +86,29 @@ export const getTransactionsTableColumns = (actionsSlot: (payload: TransactionsA
       },
     },
     {
-      accessorKey: 'created_at',
-      meta: 'created_at',
+      accessorKey: 'dayOfMonth',
+      meta: 'dayOfMonth',
       header: ({ column }) => {
-        return <TableColumnHeader column={column} title="Date" />;
+        return <TableColumnHeader column={column} title="Recurring day" />;
       },
       cell: ({ getValue }) => {
-        return (
+        return <p>{getValue() as string}</p>;
+      },
+    },
+    {
+      accessorKey: 'lastExecuted',
+      meta: 'lastExecuted',
+      header: ({ column }) => {
+        return <TableColumnHeader column={column} title="Last executed" />;
+      },
+      cell: ({ getValue }) => {
+        return getValue() ? (
           <FormatDate
-            date={new Date((getValue() as string) ?? new Date())}
+            date={new Date(getValue() as string)}
             format={`${dateFormats.day}.${dateFormats.month}.${dateFormats.year}`}
           />
+        ) : (
+          '-'
         );
       },
     },
@@ -110,7 +124,7 @@ export const getTransactionsTableColumns = (actionsSlot: (payload: TransactionsA
           name: transaction.name,
           amount: transaction.amount,
           categoryId: transaction.categoryId || '',
-          date: transaction.created_at,
+          dayOfMonth: transaction.dayOfMonth,
         });
       },
     },

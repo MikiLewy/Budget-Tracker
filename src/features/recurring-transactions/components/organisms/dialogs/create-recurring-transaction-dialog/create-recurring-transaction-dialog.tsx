@@ -5,101 +5,52 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { createRecurringTransactionSchema } from './schema/create-recurring-transaction-schema';
+
 import { DatePicker } from '@/components/molecules/date-picker';
 import Dialog, { DialogActions } from '@/components/organisms/dialog';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { dateFormats } from '@/constants/date-formats';
 import { transactionsCategoriesTypes } from '@/constants/transactions-categories';
-import { useUpdateTransaction } from '@/features/transactions/hooks/mutation/use-update-transaction';
+import { useCreateRecurringTransaction } from '@/features/recurring-transactions/hooks/mutation/use-create-recurring-transaction';
 import { useCategories } from '@/shared/hooks/query/use-categories';
-import { useCurrentUser } from '@/shared/hooks/query/use-current-user';
-import { TransactionType } from '@/shared/types/transaction-type';
-import { calculateBalanceBasedOnTransactionType } from '@/shared/utils/calculate-balance-based-on-transaction-type';
-import { calculateDifferenceInAmount } from '@/shared/utils/calculate-difference-in-amount';
-import { calculateInitialBalanceBasedOnTransactionType } from '@/shared/utils/calculate-initial-balance-based-on-transaction-type';
 
-import { updateTransactionSchema } from './schema/update-transaction-schema';
-
-type FormValues = z.infer<typeof updateTransactionSchema>;
+type FormValues = z.infer<typeof createRecurringTransactionSchema>;
 
 const defaultValues: FormValues = {
   name: '',
   type: 'income',
   categoryId: '',
   amount: 1,
-  date: new Date(),
+  date: new Date(2025, 0, 1),
 };
 
-interface Props extends DialogActions {
-  selectedTransactionId: string;
-  selectedTransactionName: string;
-  selectedTransactionAmount: number;
-  selectedTransactionType: TransactionType;
-  selectedTransactionCategoryId: string;
-  selectedTransactionDate: Date;
-}
-
-const UpdateTransactionDialog = ({
-  open,
-  onClose,
-  selectedTransactionId,
-  selectedTransactionName,
-  selectedTransactionAmount,
-  selectedTransactionType,
-  selectedTransactionCategoryId,
-  selectedTransactionDate,
-}: Props) => {
+const CreateRecurringTransactionDialog = ({ open, onClose }: DialogActions) => {
   const form = useForm<FormValues>({
     defaultValues,
     mode: 'onBlur',
-    resolver: zodResolver(updateTransactionSchema),
+    resolver: zodResolver(createRecurringTransactionSchema),
   });
 
   const { data: categoriesData } = useCategories();
 
-  const { mutateAsync, isPending } = useUpdateTransaction();
+  const { mutateAsync, isPending } = useCreateRecurringTransaction();
 
   const onSubmit = async (values: FormValues) => {
-    await mutateAsync({ ...values, id: selectedTransactionId }, { onSuccess: onClose });
+    await mutateAsync({ ...values, dayOfMonth: values.date.getDate() }, { onSuccess: onClose });
   };
 
-  const { data: currentUser } = useCurrentUser();
-
-  const transactionType = form.watch('type');
-
-  const amount = form.watch('amount');
-
-  const differenceInAmount = calculateDifferenceInAmount({ oldAmount: selectedTransactionAmount, newAmount: amount });
-
-  const balanceAfterTransaction = calculateBalanceBasedOnTransactionType({
-    transactionType,
-    amount: differenceInAmount,
-    balance: calculateInitialBalanceBasedOnTransactionType({
-      oldType: selectedTransactionType,
-      newType: transactionType,
-      balance: currentUser?.balance || 0,
-      amount: selectedTransactionAmount,
-    }),
-  });
-
   useEffect(() => {
-    if (open) {
-      form.reset({
-        name: selectedTransactionName,
-        amount: selectedTransactionAmount,
-        type: selectedTransactionType,
-        categoryId: selectedTransactionCategoryId,
-        date: selectedTransactionDate,
-      });
-    } else {
+    if (!open) {
       form.reset(defaultValues);
     }
   }, [open]);
 
   return (
     <Dialog
-      title="Update transaction"
+      title="Create recurring transaction"
       open={open}
       onClose={onClose}
       onSubmit={form.handleSubmit(onSubmit)}
@@ -187,7 +138,6 @@ const UpdateTransactionDialog = ({
                   <Input type="number" min={1} autoFocus={false} {...field} />
                 </FormControl>
                 <FormMessage />
-                <FormDescription>Balance in your account after transaction: {balanceAfterTransaction}</FormDescription>
               </FormItem>
             )}
           />
@@ -196,12 +146,21 @@ const UpdateTransactionDialog = ({
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-1">
-                <FormLabel>Date</FormLabel>
+                <FormLabel>Day of the month</FormLabel>
                 <FormControl>
-                  <DatePicker value={field.value} onChange={field.onChange} />
+                  <DatePicker
+                    value={field.value}
+                    onChange={field.onChange}
+                    disableNavigation
+                    dateFormat={`${dateFormats.day}`}
+                    defaultMonth={new Date(2025, 0)}
+                    components={{
+                      CaptionLabel: () => <div className="text-center text-sm font-medium">Select a day</div>,
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
-                <FormDescription>This is the date of the transaction</FormDescription>
+                <FormDescription>Transaction will occur on this day each month</FormDescription>
               </FormItem>
             )}
           />
@@ -211,4 +170,4 @@ const UpdateTransactionDialog = ({
   );
 };
 
-export default UpdateTransactionDialog;
+export default CreateRecurringTransactionDialog;

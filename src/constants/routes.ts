@@ -12,9 +12,9 @@ export const routes: Route[] = [
     href: '/transactions',
   },
   {
-    key: 'cyclic-transactions',
-    label: 'Cyclic transactions',
-    href: '/cyclic-transactions',
+    key: 'recurring-transactions',
+    label: 'Recurring transactions',
+    href: '/recurring-transactions',
   },
   {
     key: 'settings',
