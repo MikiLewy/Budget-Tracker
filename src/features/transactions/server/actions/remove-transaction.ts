@@ -5,12 +5,12 @@ import { Pool } from '@neondatabase/serverless';
 import { and, eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/neon-serverless';
 
-import { transactions } from '../schema/transactions';
-
 import { db } from '@/db';
 import { users } from '@/db/schema/users';
-import { getCurrentUserByClerkId } from '@/shared/api/lib/get-current-user-by-clerk-id';
+import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
 import { calculateBalanceWhenRemovingTransaction } from '@/shared/utils/calculate-balance-when-removing-transaction';
+
+import { transactions } from '../schema/transactions';
 
 export const removeTransaction = async (id: string) => {
   try {

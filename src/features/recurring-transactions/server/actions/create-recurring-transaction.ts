@@ -4,7 +4,7 @@ import { currentUser } from '@clerk/nextjs/server';
 
 import { db } from '@/db';
 import { recurringTransactions } from '@/db/schema';
-import { getCurrentUserByClerkId } from '@/shared/api/lib/get-current-user-by-clerk-id';
+import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
 import { TransactionType } from '@/shared/types/transaction-type';
 
 export interface CreateRecurringTransactionPayload {

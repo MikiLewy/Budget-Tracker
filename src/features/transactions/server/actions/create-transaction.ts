@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/neon-serverless';
 
 import { transactions, users } from '@/db/schema';
-import { getCurrentUserByClerkId } from '@/shared/api/lib/get-current-user-by-clerk-id';
+import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
 import { TransactionType } from '@/shared/types/transaction-type';
 import { calculateBalanceBasedOnTransactionType } from '@/shared/utils/calculate-balance-based-on-transaction-type';
 

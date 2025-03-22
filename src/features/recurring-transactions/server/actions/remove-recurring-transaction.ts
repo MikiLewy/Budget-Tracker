@@ -6,7 +6,7 @@ import { and, eq } from 'drizzle-orm';
 import { recurringTransactions } from '../schema/recurring-transactions';
 
 import { db } from '@/db';
-import { getCurrentUserByClerkId } from '@/shared/api/lib/get-current-user-by-clerk-id';
+import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
 
 export const removeRecurringTransaction = async (id: string) => {
   try {

@@ -7,7 +7,7 @@ import { drizzle } from 'drizzle-orm/neon-serverless';
 
 import { db } from '@/db';
 import { users } from '@/db/schema';
-import { getCurrentUserByClerkId } from '@/shared/api/lib/get-current-user-by-clerk-id';
+import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
 import { TransactionType } from '@/shared/types/transaction-type';
 import { calculateBalanceBasedOnTransactionType } from '@/shared/utils/calculate-balance-based-on-transaction-type';
 import { calculateDifferenceInAmount } from '@/shared/utils/calculate-difference-in-amount';
