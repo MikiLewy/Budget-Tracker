@@ -1,11 +1,11 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, real, text } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgTable, real, text, timestamp } from 'drizzle-orm/pg-core';
 
 import { timestamps } from '@/db/constants/timestamps';
 import { categories, users } from '@/db/schema';
 import { TransactionType } from '@/shared/types/transaction-type';
 
-export const transactions = pgTable('transactions', {
+export const recurringTransactions = pgTable('recurring_transactions', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
@@ -14,16 +14,19 @@ export const transactions = pgTable('transactions', {
   type: text('type').$type<TransactionType>().notNull(),
   userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
   categoryId: text('category_id').references(() => categories.id, { onDelete: 'cascade' }),
+  dayOfMonth: integer('day_of_month').notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
+  lastExecuted: timestamp('last_executed'),
   ...timestamps,
 });
 
-export const transactionsRelations = relations(transactions, ({ one }) => ({
+export const recurringTransactionsRelations = relations(recurringTransactions, ({ one }) => ({
   user: one(users, {
-    fields: [transactions.userId],
+    fields: [recurringTransactions.userId],
     references: [users.id],
   }),
   category: one(categories, {
-    fields: [transactions.categoryId],
+    fields: [recurringTransactions.categoryId],
     references: [categories.id],
   }),
 }));

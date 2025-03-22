@@ -1,4 +1,4 @@
-import { TransactionType } from '@/features/transactions/api/types/transaction';
+import { TransactionType } from '@/shared/types/transaction-type';
 
 type Payload = {
   oldType: TransactionType;

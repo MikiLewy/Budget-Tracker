@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, real, text } from 'drizzle-orm/pg-core';
 
+import { recurringTransactions } from '@/features/recurring-transactions/server/schema/recurring-transactions';
 import { transactions } from '@/features/transactions/server/schema/transactions';
 
 import { timestamps } from '../constants/timestamps';
@@ -17,4 +18,5 @@ export const users = pgTable('users', {
 
 export const usersRelations = relations(users, ({ many }) => ({
   transactions: many(transactions),
+  recurringTransactions: many(recurringTransactions),
 }));

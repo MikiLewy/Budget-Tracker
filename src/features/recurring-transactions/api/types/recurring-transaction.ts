@@ -1,7 +1,7 @@
 import { InferDBResultType } from '@/types/infer-db-result-type';
 
-export type Transaction = InferDBResultType<
-  'transactions',
+export type RecurringTransaction = InferDBResultType<
+  'recurringTransactions',
   {
     category: {
       columns: {

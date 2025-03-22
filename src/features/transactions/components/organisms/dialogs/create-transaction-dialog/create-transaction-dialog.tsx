@@ -42,7 +42,7 @@ const CreateTransactionDialog = ({ open, onClose }: DialogActions) => {
   const { mutateAsync, isPending } = useCreateTransaction();
 
   const onSubmit = async (values: FormValues) => {
-    await mutateAsync(values, { onSuccess: onClose });
+    await mutateAsync({ ...values, userId: currentUser?.id || '' }, { onSuccess: onClose });
   };
 
   const transactionType = form.watch('type');
