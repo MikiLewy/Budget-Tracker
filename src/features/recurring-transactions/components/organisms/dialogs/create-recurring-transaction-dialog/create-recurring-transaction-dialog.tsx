@@ -3,9 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { z } from 'zod';
-
-import { createRecurringTransactionSchema } from './schema/create-recurring-transaction-schema';
 
 import { DatePicker } from '@/components/molecules/date-picker';
 import Dialog, { DialogActions } from '@/components/organisms/dialog';
@@ -16,6 +15,8 @@ import { dateFormats } from '@/constants/date-formats';
 import { transactionsCategoriesTypes } from '@/constants/transactions-categories';
 import { useCreateRecurringTransaction } from '@/features/recurring-transactions/hooks/mutation/use-create-recurring-transaction';
 import { useCategories } from '@/shared/hooks/query/use-categories';
+
+import { createRecurringTransactionSchema } from './schema/create-recurring-transaction-schema';
 
 type FormValues = z.infer<typeof createRecurringTransactionSchema>;
 
@@ -39,7 +40,15 @@ const CreateRecurringTransactionDialog = ({ open, onClose }: DialogActions) => {
   const { mutateAsync, isPending } = useCreateRecurringTransaction();
 
   const onSubmit = async (values: FormValues) => {
-    await mutateAsync({ ...values, dayOfMonth: values.date.getDate() }, { onSuccess: onClose });
+    await mutateAsync(
+      { ...values, dayOfMonth: values.date.getDate() },
+      {
+        onSuccess: () => {
+          onClose?.();
+          toast.success('Successfully created recurring transaction');
+        },
+      },
+    );
   };
 
   useEffect(() => {

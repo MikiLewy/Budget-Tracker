@@ -3,29 +3,31 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { z } from 'zod';
-
-import { useSettingsSchema } from './schema/settings-schema';
 
 import { LoadingButton } from '@/components/atoms/loading-button';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { currencies } from '@/constants/currencies';
+import { useFormatPrice } from '@/hooks/use-format-price';
 import { useUpdateUserDetails } from '@/shared/hooks/mutation/use-update-user-details';
 import { useCurrentUser } from '@/shared/hooks/query/use-current-user';
-import { formatPrice } from '@/utils/format-price';
 
-const defaultValues = {
+import { SettingsFormValues, settingsSchema } from './schema/settings-schema';
+
+const defaultValues: SettingsFormValues = {
   balance: 0,
+  currency: 'EUR',
 };
 
 const SettingsForm = () => {
-  const validationSchema = useSettingsSchema();
+  const { formatPrice } = useFormatPrice();
 
-  const form = useForm<z.infer<typeof validationSchema>>({
+  const form = useForm<SettingsFormValues>({
     defaultValues,
-    resolver: zodResolver(validationSchema),
+    resolver: zodResolver(settingsSchema),
     mode: 'onBlur',
   });
 
@@ -33,20 +35,23 @@ const SettingsForm = () => {
 
   const { mutate: updateUserDetails, isPending: isUpdatingUserDetails } = useUpdateUserDetails();
 
-  const onSubmit = (values: z.infer<typeof validationSchema>) => {
-    updateUserDetails(values.balance);
+  const onSubmit = (values: SettingsFormValues) => {
+    updateUserDetails({
+      balance: values.balance,
+      currency: values.currency,
+    });
   };
 
   useEffect(() => {
     if (user) {
-      form.reset({ balance: user?.balance });
+      form.reset({ balance: user?.balance, currency: user?.currency });
     }
   }, [user]);
 
   return (
     <FormProvider {...form}>
       <div className="flex flex-col gap-4">
-        <div className="max-w-sm">
+        <div className="max-w-sm flex flex-col gap-4">
           <FormField
             control={form.control}
             name="balance"
@@ -61,6 +66,36 @@ const SettingsForm = () => {
                 </FormControl>
                 <FormMessage />
                 <FormDescription>Set your budget</FormDescription>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="currency"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Currency</FormLabel>
+                <Select
+                  onValueChange={value => {
+                    field.onChange(value);
+                    form.trigger('currency');
+                  }}
+                  value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a currency" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {currencies.map(currency => (
+                      <SelectItem key={currency.value} value={currency.value}>
+                        {currency.value} {currency.sign}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+                <FormDescription>This will be your default currency for all transactions.</FormDescription>
               </FormItem>
             )}
           />

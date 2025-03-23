@@ -3,13 +3,15 @@
 import { DollarSignIcon, List, TrendingDown, TrendingUp } from 'lucide-react';
 
 import { useTransactions } from '@/features/transactions/hooks/query/use-transactions';
+import { useFormatPrice } from '@/hooks/use-format-price';
 import { useCurrentUser } from '@/shared/hooks/query/use-current-user';
-import { formatPrice } from '@/utils/format-price';
 
 import OverviewCard from '../atoms/overview-card';
 
 const Overview = () => {
   const { data: userData } = useCurrentUser();
+
+  const { formatPrice } = useFormatPrice();
 
   const { data: transactionsData } = useTransactions();
 
