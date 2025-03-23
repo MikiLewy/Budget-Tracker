@@ -9,9 +9,9 @@ import { useDialog } from '@/hooks/use-dialog';
 import { CategoryType } from '@/types/enum/category-type';
 
 import {
-  getTransactionsTableColumns,
+  useTransactionsTableColumns,
   TransactionsActionSlotPayload,
-} from '../../../utils/get-transactions-table-columns';
+} from '../../../hooks/use-transactions-table-columns';
 import RemoveTransactionDialog from '../../organisms/dialogs/remove-transaction-dialog';
 import UpdateTransactionDialog from '../../organisms/dialogs/update-transaction-dialog/update-transaction-dialog';
 import { TransactionsTable } from '../../organisms/transactions-table';
@@ -50,7 +50,7 @@ const ClientTransactions = () => {
     return <ActionsTableMenu actions={actions} />;
   }, []);
 
-  const columns = getTransactionsTableColumns(actionsSlot);
+  const columns = useTransactionsTableColumns(actionsSlot);
 
   const categoriesFilters = Object.values(CategoryType).map(type => ({
     label: transactionsCategoriesTypes[type].label,

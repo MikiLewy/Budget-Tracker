@@ -6,8 +6,15 @@ import { eq } from 'drizzle-orm';
 import { db } from '@/db';
 import { users } from '@/db/schema';
 import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
+import { Currency } from '@/types/currency';
 
-export const updateUserDetails = async (balance: number) => {
+export interface UpdateUserDetailsPayload {
+  balance: number;
+  currency: Currency;
+  completedOnboarding?: boolean;
+}
+
+export const updateUserDetails = async (payload: UpdateUserDetailsPayload) => {
   try {
     const clerkUser = await currentUser();
 
@@ -21,10 +28,13 @@ export const updateUserDetails = async (balance: number) => {
       throw new Error('User not found');
     }
 
-    await db.update(users).set({ balance }).where(eq(users.id, user.id));
+    await db
+      .update(users)
+      .set({ balance: payload.balance, currency: payload.currency, completedOnboarding: payload.completedOnboarding })
+      .where(eq(users.id, user.id));
   } catch (error) {
     return {
-      error: 'Failed to create transaction',
+      error: 'Failed to update user details',
     };
   }
 };

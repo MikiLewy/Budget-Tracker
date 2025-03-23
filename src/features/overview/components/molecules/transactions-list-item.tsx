@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { formatPrice } from '@/utils/format-price';
+import { useFormatPrice } from '@/hooks/use-format-price';
 
 interface Props {
   name: string;
@@ -11,6 +11,8 @@ interface Props {
 }
 
 const TransactionsListItem = ({ name, categoryName, amount, type, icon }: Props) => {
+  const { formatPrice } = useFormatPrice();
+
   return (
     <div className="flex items-center justify-between mb-2">
       <div className="flex items-center gap-4">

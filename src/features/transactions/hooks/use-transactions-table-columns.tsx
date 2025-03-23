@@ -6,6 +6,7 @@ import { TableColumnHeader } from '@/components/organisms/table/table-column-hea
 import { Badge } from '@/components/ui/badge';
 import { dateFormats } from '@/constants/date-formats';
 import { transactionsCategoriesTypes } from '@/constants/transactions-categories';
+import { useFormatPrice } from '@/hooks/use-format-price';
 import { TransactionType } from '@/shared/types/transaction-type';
 import { CategoryType } from '@/types/enum/category-type';
 
@@ -20,7 +21,9 @@ export interface TransactionsActionSlotPayload {
   date: Date;
 }
 
-export const getTransactionsTableColumns = (actionsSlot: (payload: TransactionsActionSlotPayload) => ReactNode) => {
+export const useTransactionsTableColumns = (actionsSlot: (payload: TransactionsActionSlotPayload) => ReactNode) => {
+  const { formatPrice } = useFormatPrice();
+
   const columns: ColumnDef<Transaction>[] = [
     {
       accessorKey: 'name',
@@ -38,7 +41,7 @@ export const getTransactionsTableColumns = (actionsSlot: (payload: TransactionsA
         return <TableColumnHeader column={column} title="Amount" />;
       },
       cell: ({ getValue }) => {
-        return <p>€{getValue() as string}</p>;
+        return <p>{formatPrice(getValue() as number)}</p>;
       },
     },
     {

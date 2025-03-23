@@ -1,15 +1,16 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { ReactNode } from 'react';
 
-import { RecurringTransaction } from '../api/types/recurring-transaction';
-
 import { FormatDate } from '@/components/atoms/format-date';
 import { TableColumnHeader } from '@/components/organisms/table/table-column-header';
 import { Badge } from '@/components/ui/badge';
 import { dateFormats } from '@/constants/date-formats';
 import { transactionsCategoriesTypes } from '@/constants/transactions-categories';
+import { useFormatPrice } from '@/hooks/use-format-price';
 import { TransactionType } from '@/shared/types/transaction-type';
 import { CategoryType } from '@/types/enum/category-type';
+
+import { RecurringTransaction } from '../api/types/recurring-transaction';
 
 export interface RecurringTransactionsActionSlotPayload {
   id: string;
@@ -20,9 +21,11 @@ export interface RecurringTransactionsActionSlotPayload {
   dayOfMonth: number;
 }
 
-export const getRecurringTransactionsTableColumns = (
+export const useGetRecurringTransactionsTableColumns = (
   actionsSlot: (payload: RecurringTransactionsActionSlotPayload) => ReactNode,
 ) => {
+  const { formatPrice } = useFormatPrice();
+
   const columns: ColumnDef<RecurringTransaction>[] = [
     {
       accessorKey: 'name',
@@ -40,7 +43,7 @@ export const getRecurringTransactionsTableColumns = (
         return <TableColumnHeader column={column} title="Amount" />;
       },
       cell: ({ getValue }) => {
-        return <p>€{getValue() as string}</p>;
+        return <p>{formatPrice(getValue() as number)}</p>;
       },
     },
     {
