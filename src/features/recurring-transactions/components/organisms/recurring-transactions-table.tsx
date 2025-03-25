@@ -16,6 +16,7 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
+import ClientOnly from '@/components/molecules/client-only';
 import SearchBar from '@/components/molecules/search-bar';
 import { Table } from '@/components/organisms/table/table';
 import { TableFacetedFilter } from '@/components/organisms/table/table-faceted-filters';
@@ -86,8 +87,10 @@ export function RecurringTransactionsTable<TData, TValue>({
           ) : null}
         </div>
       </div>
-      <Table columnsLength={columns.length} table={table} />
-      <TablePagination table={table} />
+      <ClientOnly>
+        <Table columnsLength={columns.length} table={table} />
+        <TablePagination table={table} />
+      </ClientOnly>
     </div>
   );
 }

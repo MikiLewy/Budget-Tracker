@@ -16,6 +16,7 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
+import ClientOnly from '@/components/molecules/client-only';
 import SearchBar from '@/components/molecules/search-bar';
 import { Table } from '@/components/organisms/table/table';
 import { TableFacetedFilter } from '@/components/organisms/table/table-faceted-filters';
@@ -60,6 +61,11 @@ export function TransactionsTable<TData, TValue>({ columns, data, categoriesFilt
     { label: 'Income', value: 'income' },
   ];
 
+  const recurringFilters: { label: string; value: string }[] = [
+    { label: 'Recurring', value: 'true' },
+    { label: 'Non-recurring', value: 'false' },
+  ];
+
   return (
     <div className="flex flex-col grow gap-6">
       <div className="flex items-center py-4 gap-2">
@@ -70,6 +76,9 @@ export function TransactionsTable<TData, TValue>({ columns, data, categoriesFilt
         <div className="flex items-center gap-2">
           {table.getColumn('type') ? (
             <TableFacetedFilter column={table.getColumn('type')} title="Type" options={transactionTypesFilters} />
+          ) : null}
+          {table.getColumn('recurring') ? (
+            <TableFacetedFilter column={table.getColumn('recurring')} title="Recurring" options={recurringFilters} />
           ) : null}
           {table.getColumn('category') ? (
             <TableFacetedFilter column={table.getColumn('category')} title="Category" options={categoriesFilters} />
@@ -82,8 +91,10 @@ export function TransactionsTable<TData, TValue>({ columns, data, categoriesFilt
           ) : null}
         </div>
       </div>
-      <Table columnsLength={columns.length} table={table} />
-      <TablePagination table={table} />
+      <ClientOnly>
+        <Table columnsLength={columns.length} table={table} />
+        <TablePagination table={table} />
+      </ClientOnly>
     </div>
   );
 }

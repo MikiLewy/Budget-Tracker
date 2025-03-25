@@ -5,7 +5,7 @@ import HydrationBoundaryProvider from '@/providers/hydration-boundary-provider';
 
 const OverviewTransactionsPage = () => {
   return (
-    <Card className="col-span-3 flex flex-col grow">
+    <Card className="col-span-4 lg:col-span-3 flex flex-col grow">
       <CardHeader>
         <CardTitle>Recent transactions</CardTitle>
       </CardHeader>

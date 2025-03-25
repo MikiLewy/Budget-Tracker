@@ -1,7 +1,11 @@
-import { between, desc } from 'drizzle-orm';
+'use server';
+
+import { auth } from '@clerk/nextjs/server';
+import { and, between, desc, eq } from 'drizzle-orm';
 
 import { db } from '@/db';
 import { transactions } from '@/db/schema';
+import { getCurrentUserByClerkId } from '@/shared/api/lib/user';
 
 import { TransactionsPayload } from '../../hooks/query/use-transactions';
 
@@ -13,6 +17,10 @@ const DATE_RANGES = {
 } as const;
 
 export const getTransactions = async (payload: TransactionsPayload = {}) => {
+  const { userId } = await auth();
+
+  const user = await getCurrentUserByClerkId(userId || '');
+
   const { limit, dateRange } = payload;
 
   const response = await db.query.transactions.findMany({
@@ -26,7 +34,8 @@ export const getTransactions = async (payload: TransactionsPayload = {}) => {
       },
     },
     limit,
-    where:
+    where: and(
+      eq(transactions.userId, user?.id || ''),
       dateRange !== 'all' && !!dateRange
         ? between(
             transactions.created_at,
@@ -34,7 +43,7 @@ export const getTransactions = async (payload: TransactionsPayload = {}) => {
             new Date(),
           )
         : undefined,
-
+    ),
     orderBy: [desc(transactions.created_at)],
   });
 
