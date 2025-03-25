@@ -1,5 +1,15 @@
 # Changelog
 
+### 1.0.4
+
+* Dodanie transakcji cyklicznych
+* Zaprojektowanie i dodanie strony głównej
+* Przeprowadzenie onboardingu
+* Naprawa błędów
+* Aktualizacja skryptów
+
+
+
 ### 1.0.3
 
 * Dodanie widoku ustawień
