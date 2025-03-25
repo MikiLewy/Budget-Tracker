@@ -1,9 +1,9 @@
 import { UserButton } from '@clerk/nextjs';
 import Image from 'next/image';
 
-import ClientNavbar from './navbar.client';
-
 import ThemeSwitcher from '@/components/atoms/theme-switcher';
+
+import ClientNavbar from './navbar.client';
 
 const ServerNavbar = () => {
   return (

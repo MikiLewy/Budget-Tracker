@@ -1,8 +1,8 @@
-import SettingsForm from '../organisms/settings-form/settings-form';
-
 import Page from '@/components/organisms/page/page';
 import HydrationBoundaryProvider from '@/providers/hydration-boundary-provider';
 import { prefetchUser } from '@/shared/api/lib/user.prefetch';
+
+import SettingsForm from '../organisms/settings-form/settings-form';
 
 const Settings = () => {
   return (

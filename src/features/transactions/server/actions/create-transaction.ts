@@ -16,9 +16,18 @@ export interface CreateTransactionPayload {
   categoryId: string;
   date: Date;
   userId: string;
+  recurring?: boolean;
 }
 
-export const createTransaction = async ({ name, amount, categoryId, date, type, userId }: CreateTransactionPayload) => {
+export const createTransaction = async ({
+  name,
+  amount,
+  categoryId,
+  date,
+  type,
+  userId,
+  recurring = false,
+}: CreateTransactionPayload) => {
   try {
     const user = await getCurrentUserByClerkId(userId);
 
@@ -47,6 +56,7 @@ export const createTransaction = async ({ name, amount, categoryId, date, type, 
         created_at: date,
         userId: user.id,
         updated_at: new Date(),
+        recurring,
       });
       await tx.update(users).set({ balance: newBalance }).where(eq(users.id, user.id));
     });

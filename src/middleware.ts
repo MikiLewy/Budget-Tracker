@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
 const authRoutes = ['/sign-in', '/sign-up', '/api/cron/recurring-transactions'];
 
@@ -9,6 +10,10 @@ export default clerkMiddleware(async (auth, req) => {
 
   if (!userId && !isPublicRoute(req)) {
     return redirectToSignIn();
+  }
+
+  if (userId && isPublicRoute(req)) {
+    return NextResponse.redirect(new URL('/overview', req.url));
   }
 });
 

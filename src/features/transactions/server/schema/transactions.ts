@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, real, text } from 'drizzle-orm/pg-core';
+import { boolean, pgTable, real, text } from 'drizzle-orm/pg-core';
 
 import { timestamps } from '@/db/constants/timestamps';
 import { categories, users } from '@/db/schema';
@@ -12,6 +12,7 @@ export const transactions = pgTable('transactions', {
   name: text('name').notNull(),
   amount: real('amount').notNull(),
   type: text('type').$type<TransactionType>().notNull(),
+  recurring: boolean('recurring').notNull().default(false),
   userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
   categoryId: text('category_id').references(() => categories.id, { onDelete: 'cascade' }),
   ...timestamps,

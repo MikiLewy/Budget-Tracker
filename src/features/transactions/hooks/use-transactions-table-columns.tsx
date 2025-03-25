@@ -11,6 +11,7 @@ import { TransactionType } from '@/shared/types/transaction-type';
 import { CategoryType } from '@/types/enum/category-type';
 
 import { Transaction } from '../api/types/transaction';
+import RecurringTransactionInfo from '../components/atoms/recurring-transaction-info';
 
 export interface TransactionsActionSlotPayload {
   id: string;
@@ -32,6 +33,27 @@ export const useTransactionsTableColumns = (actionsSlot: (payload: TransactionsA
       header: ({ column }) => {
         return <TableColumnHeader column={column} title="Name" />;
       },
+      cell: ({ getValue, row }) => {
+        const recurring = row.original.recurring;
+
+        return (
+          <div className="flex items-center gap-2">
+            {getValue() as string} {recurring ? <RecurringTransactionInfo /> : null}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'recurring',
+      meta: 'recurring',
+      enableHiding: false,
+      filterFn: (rows, columnId, filterValue) => {
+        const recurring = rows.getValue(columnId) as boolean;
+
+        return filterValue.includes(recurring.toString());
+      },
+      header: undefined,
+      cell: undefined,
     },
     {
       accessorKey: 'amount',

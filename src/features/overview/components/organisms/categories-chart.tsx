@@ -15,11 +15,11 @@ import { Transaction } from '@/features/transactions/api/types/transaction';
 const chartConfig = {
   expense: {
     label: 'Expense',
-    color: '#2563eb',
+    color: '#8458DB',
   },
   income: {
     label: 'Income',
-    color: '#60a5fa',
+    color: '#5958DB',
   },
 } satisfies ChartConfig;
 

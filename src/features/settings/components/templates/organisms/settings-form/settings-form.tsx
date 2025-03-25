@@ -51,7 +51,7 @@ const SettingsForm = () => {
   return (
     <FormProvider {...form}>
       <div className="flex flex-col gap-4">
-        <div className="max-w-sm flex flex-col gap-4">
+        <div className=" flex flex-col gap-4">
           <FormField
             control={form.control}
             name="balance"
@@ -60,7 +60,7 @@ const SettingsForm = () => {
                 <FormLabel>Budget</FormLabel>
                 <FormControl>
                   <div className="flex items-center gap-4">
-                    <Input type="number" min={1} {...field} />
+                    <Input type="number" className="max-w-sm" min={1} {...field} />
                     <div>{formatPrice(user?.balance || 0)}</div>
                   </div>
                 </FormControl>
@@ -73,7 +73,7 @@ const SettingsForm = () => {
             control={form.control}
             name="currency"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="max-w-sm">
                 <FormLabel>Currency</FormLabel>
                 <Select
                   onValueChange={value => {

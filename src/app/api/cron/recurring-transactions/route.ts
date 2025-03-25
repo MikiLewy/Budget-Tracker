@@ -32,6 +32,7 @@ async function handler() {
         userId: transaction.user?.clerkId || '',
         date: new Date(),
         type: transaction.type,
+        recurring: true,
       });
 
       await db
