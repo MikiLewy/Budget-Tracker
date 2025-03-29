@@ -12,7 +12,7 @@ import {
   useTransactionsTableColumns,
   TransactionsActionSlotPayload,
 } from '../../../hooks/use-transactions-table-columns';
-import RemoveTransactionDialog from '../../organisms/dialogs/remove-transaction-dialog';
+import RemoveTransactionDialog from '../../organisms/dialogs/remove-transaction-dialog/remove-transaction-dialog';
 import UpdateTransactionDialog from '../../organisms/dialogs/update-transaction-dialog/update-transaction-dialog';
 import { TransactionsTable } from '../../organisms/transactions-table';
 

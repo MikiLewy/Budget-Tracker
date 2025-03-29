@@ -10,7 +10,7 @@ import { useGetRecurringTransactionsTableColumns } from '@/features/recurring-tr
 import { useDialog } from '@/hooks/use-dialog';
 import { CategoryType } from '@/types/enum/category-type';
 
-import RemoveRecurringTransactionDialog from '../../organisms/dialogs/remove-recurring-transaction-dialog';
+import RemoveRecurringTransactionDialog from '../../organisms/dialogs/remove-recurring-transaction-dialog/remove-recurring-transaction-dialog';
 import UpdateRecurringTransactionDialog from '../../organisms/dialogs/update-recurring-transaction-dialog/update-recurring-transaction-dialog';
 import { RecurringTransactionsTable } from '../../organisms/recurring-transactions-table';
 
