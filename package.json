@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.12.0",
@@ -55,7 +57,9 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@clerk/testing": "^1.4.33",
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.51.1",
     "@tanstack/eslint-plugin-query": "^5.66.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
