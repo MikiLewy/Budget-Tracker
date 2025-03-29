@@ -1,6 +1,13 @@
+import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 import Page from '@/components/organisms/page/page';
+
+export const metadata: Metadata = {
+  title: 'Overview',
+  description:
+    'Get a clear snapshot of your finances. See your income, expenses, and budget insights all in one place to make smarter financial decisions.',
+};
 
 const OverviewLayout = ({
   children,
