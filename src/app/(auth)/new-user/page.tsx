@@ -1,4 +1,5 @@
 import { currentUser } from '@clerk/nextjs/server';
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { db } from '@/db';
@@ -22,6 +23,12 @@ const createUser = async () => {
   }
 
   redirect('/overview');
+};
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+  },
 };
 
 const NewUserPage = async () => {

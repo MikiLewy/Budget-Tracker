@@ -25,7 +25,7 @@ const Home = async () => {
           </p>
         </div>
         <StarBorder as="button" className="self-center px-10" color="cyan" speed="3s">
-          <Link href={userId ? '/overview' : '/sign-in'} className="flex items-center gap-2 text-lg">
+          <Link prefetch href={userId ? '/overview' : '/sign-in'} className="flex items-center gap-2 text-lg">
             Get started <ArrowRight className="w-4 h-4" />
           </Link>
         </StarBorder>

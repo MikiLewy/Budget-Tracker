@@ -15,6 +15,7 @@ const ClientNavbar = () => {
         <Link
           key={route.key}
           href={route.href}
+          prefetch
           className={cn(
             'text-sm font-medium text-muted-foreground transition-colors hover:text-black/90 dark:hover:text-white/90',
             pathname.includes(route.href) ? 'text-black dark:text-white' : 'text-muted-foreground',
