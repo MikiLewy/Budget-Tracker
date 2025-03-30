@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Changelog
 
-## Getting Started
+### 1.0.4
 
-First, run the development server:
+* Dodanie transakcji cyklicznych
+* Zaprojektowanie i dodanie strony głównej
+* Przeprowadzenie onboardingu
+* Naprawa błędów
+* Aktualizacja skryptów
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1.0.3
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Dodanie widoku ustawień
+* Optymalizacja aplikacji
+* Naprawa błędów
 
-## Learn More
+### 1.0.2
 
-To learn more about Next.js, take a look at the following resources:
+* Dodanie manipulacji transakcjami (Dodawanie, aktualizowanie i usuwanie transakcji)
+* Dodanie akcji CRUD do transakcji
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1.0.1
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* Zaprogramowanie widoku listy transakcji
+* Dodanie typów i kategorii do listy transakcji
+* Utworzenie dodawania transakcji
+* Utworzenie szukania transakcji
+* Utworzenie tabelki
 
-## Deploy on Vercel
+### 1.0.0
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* Zaprojektowanie i stworzenie strony startowej&#x20;
+* Utworzono tworzenie kont za pomocą e-mail i google&#x20;
+* Utworzono logo&#x20;
+* Naprawa błędów
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
